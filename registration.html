@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - GobarShakti</title>
+    <link rel="stylesheet" href="style/register-styles.css">
+    <script type="module" src="scripts/register.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <div class="registration-box">
+            <div class="header">
+                <img src="assests/head.png" alt="GobarShakti Logo" class="logo">
+                <h1>Welcome to GobarShakti</h1>
+                <p>Empowering Rural Communities with Biogas Technology</p>
+            </div>
+            <form id="registerForm">
+                <div class="input-box">
+                  <input type="email" id="email" required>
+                  <label for="email">Email</label>
+                </div>
+                <br>
+                <div class="input-box">
+                  <input type="password" id="password" required>
+                  <label for="password">Password</label>
+                </div>
+                <button type="submit" id="submitButton">Register</button>
+                <p id="error-msg"></p>
+                <p>Already have an account? <a href="login.html" class="login-link">Login here</a></p>
+              </form>
+        </div>
+    </div>
+</body>
+</html>

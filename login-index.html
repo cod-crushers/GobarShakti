@@ -1,0 +1,270 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .navbar {
+            margin-bottom: 20px;
+        }
+        .card {
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .chart-container {
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        @media (max-width: 768px) {
+            .card {
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">ESP32 Admin Dashboard</a>
+            <span class="navbar-text text-light" id="lastUpdated">Last Updated: --</span>
+            <div id="auth-container" class="text-center mt-3">
+               <a href="login.html">
+                <button id="logout" class="btn btn-danger">Logout</button></a>
+            </div>
+<script>
+    // Initialize Firebase Authentication
+const auth = firebase.auth();
+
+// Handle Login
+document.getElementById('login').addEventListener('click', () => {
+    const email = prompt('Enter your email:');
+    const password = prompt('Enter your password:');
+    auth.signInWithEmailAndPassword(email, password)
+        .then(() => {
+            alert('Login successful!');
+        })
+        .catch(error => {
+            alert(`Error: ${error.message}`);
+        });
+});
+
+// Handle Logout
+document.getElementById('logout').addEventListener('click', () => {
+    auth.signOut()
+        .then(() => {
+            alert('Logged out successfully!');
+        })
+        .catch(error => {
+            alert(`Error: ${error.message}`);
+        });
+});
+
+// Monitor Authentication State
+auth.onAuthStateChanged(user => {
+    if (user) {
+        console.log(`User logged in: ${user.email}`);
+        document.getElementById('login').style.display = 'none';
+        document.getElementById('logout').style.display = 'inline-block';
+        document.querySelector('.container').style.display = 'block'; // Show dashboard
+    } else {
+        console.log('User not logged in');
+        document.getElementById('login').style.display = 'inline-block';
+        document.getElementById('logout').style.display = 'none';
+        document.querySelector('.container').style.display = 'none'; // Hide dashboard
+        alert('Please log in to access the dashboard.');
+    }
+});
+
+</script>            
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Data Cards -->
+        <div class="row">
+            <div class="col-md-3 col-sm-6">
+                <div class="card bg-primary text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Temperature</h5>
+                        <p class="card-text" id="temperature">-- °C</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card bg-success text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Humidity</h5>
+                        <p class="card-text" id="humidity">-- %</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card bg-warning text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">pH Value</h5>
+                        <p class="card-text" id="phValue">--</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <div class="card bg-danger text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Methane Gas</h5>
+                        <p class="card-text" id="methaneGas">-- ppm</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="chart-container">
+            <h5>Real-Time Data Graphs</h5>
+            <canvas id="temperatureChart"></canvas>
+            <canvas id="humidityChart" class="mt-3"></canvas>
+            <canvas id="phChart" class="mt-3"></canvas>
+            <canvas id="methaneChart" class="mt-3"></canvas>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDMqb8QVIk2JA4whwQzqK3iByhlz_cyKfQ",
+            authDomain: "gobarshakti.firebaseapp.com",
+            projectId: "gobarshakti",
+            storageBucket: "gobarshakti.firebasestorage.app",
+            messagingSenderId: "30357776390",
+            appId: "1:30357776390:web:8a0c74e5eb5e2dc4b1bb87",
+            measurementId: "G-2F8CRHDMBV"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        // Initialize Charts
+        const createChart = (ctx, label, color) => {
+            return new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [], // Time labels
+                    datasets: [{
+                        label: label,
+                        data: [],
+                        borderColor: color,
+                        borderWidth: 2,
+                        fill: false,
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Time'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: label
+                            }
+                        }
+                    }
+                }
+            });
+        };
+
+        const temperatureChart = createChart(
+            document.getElementById('temperatureChart').getContext('2d'),
+            'Temperature (°C)',
+            'rgba(255, 99, 132, 1)'
+        );
+
+        const humidityChart = createChart(
+            document.getElementById('humidityChart').getContext('2d'),
+            'Humidity (%)',
+            'rgba(54, 162, 235, 1)'
+        );
+
+        const phChart = createChart(
+            document.getElementById('phChart').getContext('2d'),
+            'pH Value',
+            'rgba(255, 206, 86, 1)'
+        );
+
+        const methaneChart = createChart(
+            document.getElementById('methaneChart').getContext('2d'),
+            'Methane Gas (ppm)',
+            'rgba(75, 192, 192, 1)'
+        );
+
+        // Fetch Data from Firebase
+        const fetchData = () => {
+            database.ref('/esp32/data').on('value', (snapshot) => {
+                const data = snapshot.val();
+                const currentTime = new Date().toLocaleTimeString();
+
+                // Update Cards
+                document.getElementById('temperature').innerText = `${data.temperature} °C`;
+                document.getElementById('humidity').innerText = `${data.humidity} %`;
+                document.getElementById('phValue').innerText = data.phValue;
+                document.getElementById('methaneGas').innerText = `${data.methaneGas} ppm`;
+
+                document.getElementById('lastUpdated').innerText = `Last Updated: ${new Date().toLocaleString()}`;
+
+                // Update Charts
+                [temperatureChart, humidityChart, phChart, methaneChart].forEach((chart, index) => {
+                    const value = [data.temperature, data.humidity, data.phValue, data.methaneGas][index];
+                    chart.data.labels.push(currentTime);
+                    chart.data.datasets[0].data.push(value);
+
+                    if (chart.data.labels.length > 10) {
+                        chart.data.labels.shift();
+                        chart.data.datasets[0].data.shift();
+                    }
+                    chart.update();
+                });
+            });
+        };
+
+        // Fetch Data on Load
+        window.onload = fetchData;
+        <div id="auth-container">
+            
+    <button id="logout" class="btn btn-danger" style="display:none;">Logout</button>
+    
+</div>
+
+    </script>
+    
+</body>
+</html>
