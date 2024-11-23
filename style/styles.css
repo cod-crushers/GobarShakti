@@ -1,0 +1,206 @@
+/* Gallery Section */
+#gallery .card {
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+}
+
+#gallery .card:hover {
+    transform: scale(1.05);  /* Slight zoom on hover */
+}
+
+#gallery .modal-body img {
+    width: 100%;
+    border-radius: 5px;
+}
+
+/* Team Section Styling */
+#team {
+    background-color: #f9f9f9;
+}
+
+#team h2 {
+    font-weight: bold;
+    color: #333;
+}
+
+#team .team-card {
+    border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#team .team-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+#team .team-photo {
+    width: 120px;
+    height: 120px;
+    border: 4px solid #007bff;
+    object-fit: cover;
+}
+
+#team .card-title {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #007bff;
+}
+
+#team .card-subtitle {
+    font-size: 0.9em;
+    color: #666;
+}
+
+#team .card-text {
+    font-size: 0.85em;
+    color: #444;
+}
+
+/* Navbar Styling */
+.navbar {
+    background-color: #000000;  /* Black background */
+    padding: 15px 30px;
+    transition: all 0.3s ease;
+}
+
+.navbar-brand {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #fff;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+}
+
+.navbar-brand:hover {
+    color: #f1f1f1;
+}
+
+.navbar-toggler {
+    border: none;
+}
+
+.navbar-toggler-icon {
+    background-color: #fff;
+}
+
+.navbar-nav .nav-item .nav-link {
+    font-size: 1.1em;
+    font-weight: 500;
+    color: #fff;
+    padding: 10px 20px;
+    transition: color 0.3s ease, transform 0.3s ease;
+    text-transform: uppercase;
+}
+
+.navbar-nav .nav-item .nav-link:hover {
+    color: #89ff3b;  /* Yellow hover effect */
+    transform: translateY(-5px);  /* Slight hover animation */
+}
+
+.navbar-nav .nav-item.active .nav-link {
+    color: #FFEB3B;  /* Active link color */
+    font-weight: bold;
+}
+
+.navbar-nav .nav-item .nav-link:focus {
+    outline: none;
+}
+
+/* On Scroll Effect */
+.navbar.scrolled {
+    background-color: #388E3C;  /* Darker green background when scrolled */
+    padding: 10px 30px;
+}
+
+/* Navbar Fixed to Top */
+.navbar.fixed-top {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Mobile Responsive Styling */
+@media (max-width: 768px) {
+    .navbar-nav {
+        text-align: center;
+    }
+    .navbar-nav .nav-item {
+        margin-bottom: 10px;
+    }
+    .navbar-brand {
+        font-size: 1.5em;
+    }
+    .navbar-toggler-icon {
+        width: 30px;
+        height: 30px;
+        background-color: #000;
+    }
+    .navbar-nav .nav-item .nav-link {
+        font-size: 1.2em;
+        padding: 15px 20px;
+    }
+}
+
+/* Mobile View for Smaller Devices */
+@media (max-width: 576px) {
+    .navbar-nav .nav-item .nav-link {
+        font-size: 1.1em;
+        padding: 12px 20px;
+    }
+}
+
+/* Hover Info Container Styling */
+.hover-info {
+    display: none;  /* Initially hidden */
+    padding: 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-top: 10px;
+    z-index: 10;
+}
+
+/* Display hover info when card is hovered */
+.team-card:hover .hover-info {
+    display: block;  /* Show on hover */
+}
+
+/* Styling for hover info links */
+.hover-info a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+    display: inline-block;
+    margin-right: 15px;
+    font-size: 1.1em;
+}
+
+.hover-info a:hover {
+    text-decoration: underline;
+}
+
+.hover-info i {
+    margin-right: 10px;
+    color: #007bff;
+}
+
+/* Adjustments for hover info container (mobile view) */
+@media (max-width: 768px) {
+    .hover-info {
+        width: 100%;
+    }
+}
+
+/* Gallery Section */
+#gallery .card {
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+}
+
+#gallery .card:hover {
+    transform: scale(1.05);  /* Slight zoom on hover */
+}
+
+#gallery .modal-body img {
+    width: 100%;
+    border-radius: 5px;
+}
