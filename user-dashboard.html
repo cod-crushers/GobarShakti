@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern User Dashboard</title>
+    <style>
+        /* General Reset */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: #f8f9fa;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #1e3d58;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .navbar img {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        .navbar h2 {
+            margin: 0;
+            font-size: 1.8rem;
+            flex-grow: 1;
+        }
+
+        .navbar .menu {
+            display: flex;
+            gap: 20px;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: white;
+            font-size: 1rem;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .navbar a:hover {
+            background-color: #2c587a;
+            transition: background-color 0.3s;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .content h1 {
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .content p {
+            font-size: 1.2rem;
+            color: #555;
+            animation: fadeIn 1.2s ease-in-out;
+        }
+
+        /* QR Section */
+        .qr-section {
+            text-align: center;
+            animation: zoomIn 0.8s ease-in-out;
+        }
+
+        .qr-section img {
+            width: 200px;
+            height: 200px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            border: 2px solid #ddd;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            animation: rotateIn 1s ease-in-out;
+        }
+
+        .qr-section h2 {
+            margin-bottom: 15px;
+            color: #2c3e50;
+            font-size: 1.5rem;
+        }
+
+        /* Device Buttons */
+        .devices {
+            text-align: center;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        .devices h3 {
+            font-size: 1.4rem;
+            color: #34495e;
+            margin-bottom: 10px;
+        }
+
+        .devices button {
+            background-color: #1e3d58;
+            color: white;
+            font-size: 1rem;
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .devices button:hover {
+            background-color: #2c587a;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes rotateIn {
+            from {
+                transform: rotate(-360deg);
+                opacity: 0;
+            }
+            to {
+                transform: rotate(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <img src="https://cod-crushers.github.io/GobarShakti/assests/head.png" alt="GobarShakti Logo">
+        <h2>GobarShakti</h2>
+        <div class="menu">
+            <a href="index.html">🏠 Home</a>
+            <a href="Messages.html">✉️ Messages</a>
+            <a href="dash.html">📊 Dashboard</a>
+            <a href="index.html">🔓 Log Out</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="content">
+            <h1>Welcome, Farmer!</h1>
+            <p>Your biogas plant insights are just a scan away.</p>
+        </div>
+
+        <!-- QR Section -->
+        <div class="qr-section">
+            <h2>📷 Scan QR Code</h2>
+            <img src="https://via.placeholder.com/200" alt="QR Code">
+        </div>
+
+        <!-- Devices -->
+        <div class="devices">
+            <h3>Available Devices</h3>
+            <button onclick="window.location.href='dash.html'">Device 1</button>
+            <button>Device 2</button>
+            <button>Device 3</button>
+        </div>
+    </div>
+</body>
+</html>
