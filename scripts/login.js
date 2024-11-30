@@ -17,21 +17,36 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app); // Initialize Firebase Auth
 
 // Form and button elements
-const form = document.getElementById("loginForm");  // Assuming your form's ID is 'loginForm'
+const form = document.getElementById("loginForm"); // Assuming your form's ID is 'loginForm'
 const loginButton = document.getElementById("submitButton");
 const errorMsg = document.getElementById("error-msg");
 
+// Admin UID
+const adminUID = "g0SASx4vB2QdxotnJqUHdm90Nmp2"; // Replace with your admin's UID
+
+// Function to show error messages
+function showError(message) {
+  errorMsg.textContent = message;
+  errorMsg.style.color = "red"; // Optional: Set error message color
+}
+
+// Function to show success messages
+function showSuccess(message) {
+  errorMsg.textContent = message;
+  errorMsg.style.color = "green"; // Optional: Set success message color
+}
+
 // Add a click event listener to the Login button
 loginButton.addEventListener("click", async (event) => {
-  event.preventDefault();
+  event.preventDefault(); // Prevent form from submitting
 
   // Get form values
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
 
   // Simple validation
   if (!email || !password) {
-    errorMsg.textContent = "All fields are required!";
+    showError("All fields are required!");
     return;
   }
 
@@ -43,16 +58,37 @@ loginButton.addEventListener("click", async (event) => {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     const user = userCredential.user; // User object
 
-    // Display success message
-    errorMsg.textContent = `Login successful! Welcome, ${user.email}`;
-
-    // Redirect to the dashboard page after a successful login
-    window.location.href = "login-index.html"; // Replace with your desired page
-
+    // Check if the logged-in user's UID matches the admin UID
+    if (user.uid === adminUID) {
+      // Redirect to the admin dashboard
+      showSuccess(`Welcome Admin! Redirecting...`);
+      window.location.href = "admin-dashboard.html"; // Replace with your admin dashboard URL
+    } else {
+      // Redirect to the user dashboard
+      showSuccess(`Welcome ${user.email}! Redirecting...`);
+      window.location.href = "user-dashboard.html"; // Replace with your user dashboard URL
+    }
   } catch (error) {
-    // Handle errors
+    // Handle Firebase Auth errors
     const errorCode = error.code;
-    const errorMessage = error.message;
-    errorMsg.textContent = `Error (${errorCode}): ${errorMessage}`;
+    let errorMessage = "";
+
+    // Map Firebase error codes to user-friendly messages
+    switch (errorCode) {
+      case "auth/user-not-found":
+        errorMessage = "No user found with this email.";
+        break;
+      case "auth/wrong-password":
+        errorMessage = "Incorrect password. Please try again.";
+        break;
+      case "auth/invalid-email":
+        errorMessage = "Invalid email format.";
+        break;
+      default:
+        errorMessage = "Login failed. Please try again.";
+    }
+
+    // Show the error message
+    showError(errorMessage);
   }
 });
