@@ -47,7 +47,7 @@ registerButton.addEventListener("click", async (event) => {
     errorMsg.textContent = `Registration successful! Welcome, ${user.email}`;
 
     // Redirect to login page after a successful registration
-    window.location.href = "login-index.html";  // Replace with your login page URL
+    window.location.href = "user-dashboard.html";  // Replace with your login page URL
 
   } catch (error) {
     // Handle errors
