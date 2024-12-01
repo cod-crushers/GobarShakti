@@ -47,6 +47,7 @@
 
     footer {
       background: #2e7d3200;
+      
       color: rgb(0, 0, 0);
       padding: 10px 0;
       text-align: center;
@@ -54,25 +55,6 @@
       bottom: 0;
       width: 100%;
     }
-
-    /* Styling for logo and slogan section */
-    .logo-section {
-      text-align: center;
-      margin-top: 50px;
-    }
-
-    .logo-section img {
-      max-width: 150px; /* Adjust logo size */
-      margin-bottom: 20px;
-    }
-
-    .logo-section h3 {
-      font-size: 1.5rem;
-      color: #388e3c;
-      font-weight: 700;
-      margin-top: 0;
-    }
-
   </style>
 </head>
 <body>
@@ -89,22 +71,36 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link active" href="#">Dashboard</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="user-dash-setting.html">Settings</a>
-          </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="user-dashboard.html">Dashboard</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="user-dash-setting.html">Settings</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active logout-link" href="index.html">Log Out</a> <!-- Added class "logout-link" -->
+            </li>
         </ul>
-      </div>
+        <style>
+            /* Style for Log Out link */
+.logout-link {
+    color: #62f436 !important; /* Red color */
+    font-weight: bold; /* Make it bold */
+    
+    transition: all 0.3s ease; /* Smooth transition */
+}
+
+/* Hover effect for Log Out link */
+.logout-link:hover {
+    color: #f44336 !important; /* Keep red color on hover */
+   
+}
+
+        </style>
+    </div>
+    
     </div>
   </nav>
-
-  <!-- Logo and Slogan Section -->
-  <div class="logo-section">
-    <img src="https://cod-crushers.github.io/GobarShakti/assests/head.png" alt="Logo"> <!-- Add your logo here -->
-    <h3>Use our product for cleaner energy, better environment, and sustainable living!</h3>
-  </div>
 
   <!-- Body Content -->
   <div class="container text-center my-5">
