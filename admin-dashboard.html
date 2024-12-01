@@ -2,201 +2,426 @@
 <html>
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Sensor Dashboard</title>
-  <style>
-    body {
-      background-color: #F5F5F5;
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sensor Dashboard</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #F5F5F5;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
 
-    .dashboard {
-      width: 90%;
-      max-width: 1200px;
-      margin: 30px auto;
-    }
+        .dashboard {
+            width: 90%;
+            max-width: 1200px;
+            margin: 30px auto;
+        }
 
-    .header {
-      text-align: center;
-      margin-bottom: 20px;
-      padding: 20px;
-      font-size: 32px;
-      font-weight: bold;
-      background-color: #FFF;
-      border-radius: 10px;
-      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-    }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 20px;
+            font-size: 32px;
+            font-weight: bold;
+            background-color: #FFF;
+            border-radius: 10px;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
 
-    .value-boxes {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      margin-bottom: 40px;
-    }
+        .charts-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
 
-    .box {
-      flex: 1 1 calc(20% - 10px);
-      background-color: #FFF;
-      color: #FFF;
-      padding: 20px;
-      margin: 5px;
-      text-align: center;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    }
+        .chart-box {
+            flex: 1;
+            background-color: #FFF;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            min-width: 280px;
+        }
 
-    .box:nth-child(1) {
-      background-color: #FF6F61;
-    }
+        .pie-container {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
 
-    .box:nth-child(2) {
-      background-color: #6EB7FF;
-    }
+        .pie-chart-box {
+            flex-shrink: 0;
+            width: 200px;
+        }
 
-    .box:nth-child(3) {
-      background-color: #FFD700;
-    }
+        .averageGraph {
+            flex-shrink: 0;
+            width: 200px;
+        }
 
-    .box:nth-child(4) {
-      background-color: #28A745;
-    }
+        .parameter-box {
+            background-color: #FFF;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            flex-grow: 1;
+            min-width: 280px;
+        }
 
-    .box:nth-child(5) {
-      background-color: #FFB6C1;
-    }
+        .parameter-box h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
 
-    .box h2 {
-      font-size: 20px;
-      margin-bottom: 10px;
-    }
+        .parameter-box p {
+            margin: 5px 0;
+            font-size: 16px;
+        }
 
-    .box p {
-      font-size: 28px;
-      font-weight: bold;
-    }
+        .average-graph {
+            flex-basis: 100%;
+            margin-top: 20px;
+        }
 
-    .chart-container {
-      padding: 20px;
-      background-color: #FFF;
-      border-radius: 10px;
-      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-    }
-  </style>
+        /* Mobile view adjustments */
+        @media (max-width: 768px) {
+            .header {
+                font-size: 28px;
+            }
+
+            .charts-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .chart-box {
+                width: 100%;
+                max-width: 600px;
+            }
+
+            .pie-container {
+                flex-direction: column;
+            }
+
+            .pie-chart-box,
+            .averageGraph {
+                width: 100%;
+                max-width: 150px;
+            }
+
+            .parameter-box {
+                width: 100%;
+                max-width: 600px;
+            }
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            margin-bottom: 20px;
+        }
+
+        .navbar-nav .nav-link {
+            font-size: 18px;
+            padding: 10px 20px;
+        }
+
+        .navbar-brand {
+            font-size: 24px;
+        }
+    </style>
 </head>
 
 <body>
-  <div class="dashboard">
-    <div class="header">Sensor Dashboard</div>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <a class="navbar-brand" href="#">GOBARShakti</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+                <li class="nav-item"><a class="nav-link" href="#gallery">Gallery</a></li>
+                <li class="nav-item"><a class="nav-link" href="https://forms.gle/QbbEzFj3WJ4Sktgc8">Contact</a></li>
+                <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+            </ul>
+        </div>
+    </nav>
+    <br><br><br>
+    <!-- Dashboard Content -->
+    <div class="dashboard">
+        <div class="header">Sensor Dashboard</div>
 
-    <div class="value-boxes">
-      <div class="box">
-        <h2>Temperature</h2>
-        <p id="temperature">-- &#8451;</p>
-      </div>
-      <div class="box">
-        <h2>Humidity</h2>
-        <p id="humidity">--%</p>
-      </div>
-      <div class="box">
-        <h2>Methane</h2>
-        <p id="methane">-- ppm</p>
-      </div>
-      <div class="box">
-        <h2>pH</h2>
-        <p id="ph">--</p>
-      </div>
-      <div class="box">
-        <h2>Pressure</h2>
-        <p id="pressure">-- hPa</p>
-      </div>
+        <!-- Line and Bar Graphs -->
+        <div class="charts-container">
+            <div class="chart-box">
+                <canvas id="lineGraph"></canvas>
+            </div>
+            <div class="chart-box">
+                <canvas id="barGraph"></canvas>
+            </div>
+        </div>
+
+        <!-- Pie Chart and Parameters -->
+        <div class="charts-container">
+            <div class="chart-box pie-container">
+                <div class="pie-chart-box">
+                    <canvas id="pieChart"></canvas>
+                </div>
+                <div class="parameter-box">
+                    <h2>Current Readings</h2>
+                    <p><b>Temperature:</b> <span id="temperature">-- °C</span></p>
+                    <p><b>Humidity:</b> <span id="humidity">--%</span></p>
+                    <p><b>Methane:</b> <span id="methane">-- ppm</span></p>
+                    <p><b>pH:</b> <span id="ph">--</span></p>
+                    <p><b>Pressure:</b> <span id="pressure">-- hPa</span></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Average Readings Graph -->
+        <div class="charts-container">
+            <div class="chart-box pie-container">
+                <div class="pie-chart-box">
+                    <canvas id="averageGraph" width="150" height="150"></canvas> <!-- Smaller size -->
+                </div>
+                <div class="parameter-box">
+                    <h2>Average Readings</h2>
+                    <p><b>Temperature:</b> <span id="avg-temperature">-- °C</span></p>
+                    <p><b>Humidity:</b> <span id="avg-humidity">-- %</span></p>
+                    <p><b>Methane:</b> <span id="avg-methane">-- ppm</span></p>
+                    <p><b>pH:</b> <span id="avg-ph">--</span></p>
+                    <p><b>Pressure:</b> <span id="avg-pressure">-- hPa</span></p>
+                </div>
+            </div>
+        </div>
+
     </div>
 
-    <div class="chart-container">
-      <canvas id="sensorChart"></canvas>
-    </div>
-  </div>
+    <!-- Firebase and Chart.js scripts -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <!-- Firebase scripts -->
-  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDLrFF01EHt_KgnUASN7kGqR8RDWLY2W-s",
+            authDomain: "gobarshakti-sih.firebaseapp.com",
+            databaseURL: "https://gobarshakti-sih-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "gobarshakti-sih",
+            storageBucket: "gobarshakti-sih.firebasestorage.app",
+            messagingSenderId: "109279329962",
+            appId: "1:109279329962:web:e4c7183cfacf65101cdad3"
+        };
 
-  <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
 
-  <script>
-    // Firebase configuration
-    const firebaseConfig = {
-      apiKey: "AIzaSyDLrFF01EHt_KgnUASN7kGqR8RDWLY2W-s",
-      authDomain: "gobarshakti-sih.firebaseapp.com",
-      databaseURL: "https://gobarshakti-sih-default-rtdb.asia-southeast1.firebasedatabase.app",
-      projectId: "gobarshakti-sih",
-      storageBucket: "gobarshakti-sih.firebasestorage.app",
-      messagingSenderId: "109279329962",
-      appId: "1:109279329962:web:e4c7183cfacf65101cdad3"
-    };
+        // Reference to "RealTimeData" node
+        const realTimeDataRef = firebase.database().ref('RealTimeData');
 
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
+        // Variables for storing daily totals and counts
+        const dailyData = {
+            temperature: { total: 0, count: 0 },
+            humidity: { total: 0, count: 0 },
+            methane: { total: 0, count: 0 },
+            ph: { total: 0, count: 0 },
+            pressure: { total: 0, count: 0 }
+        };
 
-    // Get reference to the "sensors" node
-    const sensorsRef = firebase.database().ref('sensors');
+        // Chart.js configurations
+        const timeLabels = [];
 
-    // Chart configuration
-    const ctx = document.getElementById('sensorChart').getContext('2d');
-    const sensorChart = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: [], // Time labels
-        datasets: [
-          { label: 'Temperature (°C)', data: [], borderColor: '#FF6F61', fill: false },
-          { label: 'Humidity (%)', data: [], borderColor: '#6EB7FF', fill: false },
-          { label: 'Methane (ppm)', data: [], borderColor: '#FFD700', fill: false },
-          { label: 'pH', data: [], borderColor: '#28A745', fill: false },
-          { label: 'Pressure (hPa)', data: [], borderColor: '#FFB6C1', fill: false }
-        ]
-      },
-      options: {
-        responsive: true,
-        scales: {
-          x: { title: { display: true, text: 'Time' } },
-          y: { title: { display: true, text: 'Value' } }
+        const lineChart = new Chart(document.getElementById('lineGraph').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: timeLabels,
+                datasets: [
+                    { label: 'Temperature (°C)', data: [], borderColor: 'red', fill: false },
+                    { label: 'Humidity (%)', data: [], borderColor: '#6EB7FF', fill: false },
+                    { label: 'Methane (ppm)', data: [], borderColor: '#FFD700', fill: false },
+                    { label: 'pH', data: [], borderColor: '#28A745', fill: false }
+                ]
+            },
+            options: { responsive: true }
+        });
+
+        const barChart = new Chart(document.getElementById('barGraph').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: ['Temperature', 'Humidity', 'Methane', 'pH', 'Pressure'],
+                datasets: [{
+                    data: [0, 0, 0, 0, 0], // Initial data, will be updated dynamically
+                    backgroundColor: ['#FF6F61', '#6EB7FF', '#FFD700', '#28A745', '#ce08ff']
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { beginAtZero: true } // Ensure the Y-axis starts from 0
+                }
+            }
+        });
+
+        // Fetch data from Firebase and update the chart
+        realTimeDataRef.on('value', (snapshot) => {
+            const data = snapshot.val();
+            console.log(data); // Log the data to check its structure
+
+            if (data) {
+                // Fetch individual sensor values, falling back to 0 if not available
+                const temperature = data.DS18B20_Temperature || 0;
+                const humidity = data.Humidity || 0;
+                const methane = data.Methane_Concentration || 0;
+                const ph = data.pH || 0;
+                const pressure = data.Pressure || 0;
+
+                // Create an array of the values
+                const values = [temperature, humidity, methane, ph, pressure];
+
+                // Update the bar chart with the new values
+                barChart.data.datasets[0].data = values;
+
+                // Ensure the chart updates with the new data
+                barChart.update();
+            } else {
+                console.error('No data found or data is undefined');
+            }
+        });
+
+
+        const pieChart = new Chart(document.getElementById('pieChart').getContext('2d'), {
+            type: 'pie',
+            data: {
+                labels: ['Temperature', 'Humidity', 'Methane', 'pH', 'Pressure'],
+                datasets: [{
+                    data: [0, 0, 0, 0, 0],
+                    backgroundColor: ['#FF6F61', '#6EB7FF', '#FFD700', '#28A745', '#ce08ff']
+                }]
+            },
+            options: { responsive: true }
+        });
+
+        const averageGraph = new Chart(document.getElementById('averageGraph').getContext('2d'), {
+            type: 'pie',
+            data: {
+                labels: ['Temperature', 'Humidity', 'Methane', 'pH', 'Pressure'],
+                datasets: [{
+                    data: [0, 0, 0, 0, 0],
+                    backgroundColor: ['#FF6F61', '#6EB7FF', '#FFD700', '#28A745', '#ce08ff']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } }
+            }
+        });
+
+        // Update data from Firebase
+        realTimeDataRef.on('value', (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                const time = new Date().toLocaleTimeString();
+                timeLabels.push(time);
+                lineChart.data.labels.push(time);
+                lineChart.data.datasets[0].data.push(data.DS18B20_Temperature);
+                lineChart.data.datasets[1].data.push(data.Humidity);
+                lineChart.data.datasets[2].data.push(data.Methane_Concentration);
+                lineChart.data.datasets[3].data.push(data.pH);
+
+                if (lineChart.data.labels.length > 10) {
+                    timeLabels.shift();
+                    lineChart.data.labels.shift();
+                    lineChart.data.datasets.forEach(dataset => dataset.data.shift());
+                }
+
+                lineChart.update();
+
+                const values = [
+                    data.DS18B20_Temperature,
+                    data.Humidity,
+                    data.Methane_Concentration,
+                    data.pH,
+                    data.Pressure
+                ];
+
+                barChart.data.datasets[0].data = values;
+                pieChart.data.datasets[0].data = values;
+                barChart.update();
+                pieChart.update();
+
+                document.getElementById('temperature').textContent = data.DS18B20_Temperature + " °C";
+                document.getElementById('humidity').textContent = data.Humidity + "%";
+                document.getElementById('methane').textContent = data.Methane_Concentration + " ppm";
+                document.getElementById('ph').textContent = data.pH;
+                document.getElementById('pressure').textContent = data.Pressure + " hPa";
+
+                updateDailyAverages(data);
+            }
+        });
+
+
+        function updateDailyAverages(data) {
+            dailyData.temperature.total += data.DS18B20_Temperature;
+            dailyData.temperature.count++;
+            dailyData.humidity.total += data.Humidity;
+            dailyData.humidity.count++;
+            dailyData.methane.total += data.Methane_Concentration;
+            dailyData.methane.count++;
+            dailyData.ph.total += data.pH;
+            dailyData.ph.count++;
+            dailyData.pressure.total += data.Pressure;
+            dailyData.pressure.count++;
+
+            const averages = [
+                dailyData.temperature.total / dailyData.temperature.count,
+                dailyData.humidity.total / dailyData.humidity.count,
+                dailyData.methane.total / dailyData.methane.count,
+                dailyData.ph.total / dailyData.ph.count,
+                dailyData.pressure.total / dailyData.pressure.count
+            ];
+
+            averageGraph.data.datasets[0].data = averages;
+            averageGraph.update();
+
+            document.getElementById('avg-temperature').textContent = averages[0].toFixed(2) + " °C";
+            document.getElementById('avg-humidity').textContent = averages[1].toFixed(2) + " %";
+            document.getElementById('avg-methane').textContent = averages[2].toFixed(2) + " ppm";
+            document.getElementById('avg-ph').textContent = averages[3].toFixed(2);
+            document.getElementById('avg-pressure').textContent = averages[4].toFixed(2) + " hPa";
         }
-      }
-    });
+        realTimeDataRef.on('value', (snapshot) => {
+            const data = snapshot.val();
+            console.log(data); // Log the data to check its structure
 
-    // Update data from Firebase
-    sensorsRef.on('value', (snapshot) => {
-      const data = snapshot.val();
+            if (data) {
+                // Fetch the individual sensor values
+                const temperature = data.DS18B20_Temperature || 0;
+                const humidity = data.Humidity || 0;
+                const methane = data.Methane_Concentration || 0;
+                const ph = data.pH || 0;
+                const pressure = data.Pressure || 0;
 
-      // Update HTML content
-      document.getElementById('temperature').innerHTML = data.temperature + " &#8451;";
-      document.getElementById('humidity').innerHTML = data.humidity + "%";
-      document.getElementById('methane').innerHTML = data.methaneConcentration + " ppm";
-      document.getElementById('ph').innerHTML = data.ph;
-      document.getElementById('pressure').innerHTML = data.pressure + " hPa";
+                // Create an array of the values
+                const values = [temperature, humidity, methane, ph, pressure];
 
-      // Add new data to chart
-      const time = new Date().toLocaleTimeString();
-      sensorChart.data.labels.push(time);
+                // Update the bar chart with the new values
+                barChart.data.datasets[0].data = values;
 
-      sensorChart.data.datasets[0].data.push(data.temperature);
-      sensorChart.data.datasets[1].data.push(data.humidity);
-      sensorChart.data.datasets[2].data.push(data.methaneConcentration);
-      sensorChart.data.datasets[3].data.push(data.ph);
-      sensorChart.data.datasets[4].data.push(data.pressure);
+                // Make sure the chart is updated
+                barChart.update();
+            }
+        });
 
-      // Limit data points
-      if (sensorChart.data.labels.length > 10) {
-        sensorChart.data.labels.shift();
-        sensorChart.data.datasets.forEach(dataset => dataset.data.shift());
-      }
-
-      sensorChart.update();
-    });
-  </script>
+    </script>
 </body>
 
 </html>
