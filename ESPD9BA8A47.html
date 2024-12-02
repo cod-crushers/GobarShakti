@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ESPD9BA8A47 Dashboard</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <style>
+        body {
+            background-color: #d2ffd0;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .dashboard {
+            width: 90%;
+            max-width: 1200px;
+            margin: 30px auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 20px;
+            font-size: 32px;
+            font-weight: bold;
+            background-color: #fffebe;
+            border-radius: 10px;
+            box-shadow: 0 2px 20px rgba(56, 255, 122, 0.638);
+        }
+
+        .charts-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .chart-box {
+            flex: 1;
+            background-color: #FFF;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            min-width: 280px;
+        }
+
+        .parameter-box {
+            background-color: #FFF;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            flex-grow: 1;
+            min-width: 280px;
+        }
+
+        .parameter-box h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .parameter-box p {
+            margin: 5px 0;
+            font-size: 16px;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            margin-bottom: 20px;
+        }
+
+        .navbar-nav .nav-link {
+            font-size: 18px;
+            padding: 10px 20px;
+        }
+
+        .navbar-brand {
+            font-size: 24px;
+        }
+    </style>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <a class="navbar-brand" href="#">GOBARShakti</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Gallery</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <br><br><br>
+
+    <!-- Dashboard Content -->
+    <div class="dashboard">
+        <div class="header">ESPD9BA8A47 Dashboard(demo)</div>
+
+        <!-- Line and Bar Graphs -->
+        <div class="charts-container">
+            <div class="chart-box">
+                <canvas id="lineGraph"></canvas>
+            </div>
+            <div class="chart-box">
+                <canvas id="barGraph"></canvas>
+            </div>
+        </div>
+        <br>
+
+        <!-- Parameters -->
+        <div class="charts-container">
+            <div class="chart-box">
+                <div class="parameter-box">
+                    <h2>Current Readings</h2>
+                    <p><b>Temperature:</b> <span id="temperature">-- °C</span></p>
+                    <p><b>Humidity:</b> <span id="humidity">--%</span></p>
+                    <p><b>Methane:</b> <span id="methane">-- ppm</span></p>
+                    <p><b>pH:</b> <span id="ph">--</span></p>
+                    <p><b>Pressure:</b> <span id="pressure">-- hPa</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function generateRandomData() {
+            return {
+                temperature: (Math.random() * 40 + 10).toFixed(2), // Random temp between 10-50°C
+                humidity: (Math.random() * 60 + 20).toFixed(2), // Random humidity between 20-80%
+                methane: (Math.random() * 1000).toFixed(2), // Random methane concentration
+                ph: (Math.random() * 7 + 1).toFixed(2), // Random pH between 1-8
+                pressure: (Math.random() * 40 + 960).toFixed(2) // Random pressure between 960-1000 hPa
+            };
+        }
+
+        function updateUI(data) {
+            document.getElementById('temperature').textContent = data.temperature + " °C";
+            document.getElementById('humidity').textContent = data.humidity + "%";
+            document.getElementById('methane').textContent = data.methane + " ppm";
+            document.getElementById('ph').textContent = data.ph;
+            document.getElementById('pressure').textContent = data.pressure + " hPa";
+        }
+
+        function updateCharts(data) {
+            const time = new Date().toLocaleTimeString();
+            lineChart.data.labels.push(time);
+            lineChart.data.datasets[0].data.push(data.temperature);
+            lineChart.data.datasets[1].data.push(data.humidity);
+            lineChart.data.datasets[2].data.push(data.methane);
+            lineChart.data.datasets[3].data.push(data.ph);
+
+            if (lineChart.data.labels.length > 10) {
+                lineChart.data.labels.shift();
+                lineChart.data.datasets.forEach(dataset => dataset.data.shift());
+            }
+            lineChart.update();
+
+            barChart.data.datasets[0].data = [
+                data.temperature,
+                data.humidity,
+                data.methane,
+                data.ph,
+                data.pressure
+            ];
+            barChart.update();
+        }
+
+        // Chart.js configurations
+        const lineChart = new Chart(document.getElementById('lineGraph').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [
+                    { label: 'Temperature (°C)', data: [], borderColor: 'red', fill: false },
+                    { label: 'Humidity (%)', data: [], borderColor: '#6EB7FF', fill: false },
+                    { label: 'Methane (ppm)', data: [], borderColor: '#FFD700', fill: false },
+                    { label: 'pH', data: [], borderColor: '#28A745', fill: false }
+                ]
+            },
+            options: { responsive: true }
+        });
+
+        const barChart = new Chart(document.getElementById('barGraph').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: ['Temperature', 'Humidity', 'Methane', 'pH', 'Pressure'],
+                datasets: [{
+                    data: [],
+                    backgroundColor: ['#FF6F61', '#6EB7FF', '#FFD700', '#28A745', '#ce08ff']
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: { beginAtZero: true }
+                },
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
+
+        // Simulate random data updates every 2 seconds
+        setInterval(() => {
+            const randomData = generateRandomData();
+            updateUI(randomData);
+            updateCharts(randomData);
+        }, 2000);
+    </script>
+</body>
+
+</html>
