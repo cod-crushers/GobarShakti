@@ -1,0 +1,115 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+  }
+  
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+  }
+  
+  /* Navbar Styling */
+  .navbar {
+    padding: 10px;
+    background-color: #343a40;
+    color: white;
+  }
+  
+  .navbar .btn {
+    margin-left: 10px;
+  }
+  
+  .navbar-brand {
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+  
+  .navbar .container-fluid {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  /* Card Styling */
+  .card {
+    border-radius: 10px;
+  }
+  
+  .card-header {
+    background-color: #210054;
+    color: white;
+    font-weight: bold;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+  
+  .card-body {
+    background-color: #ffffff;
+    padding: 20px;
+  }
+  
+  /* Form Inputs */
+  .form-control {
+    border-radius: 10px;
+  }
+  
+  /* Buttons */
+  .btn {
+    border-radius: 10px;
+    padding: 12px;
+  }
+  
+  .btn-primary {
+    background-color: #c1fba2;
+    --bs-btn-color: #000000;
+    border: none;
+  }
+  
+  .w-100 {
+    width: 100%;
+  }
+  
+  /* Mobile View Styling */
+  @media (max-width: 768px) {
+    .container {
+      margin-top: 10px;
+    }
+    
+    .navbar .container-fluid {
+      flex-direction: column;
+    }
+    
+    .navbar .btn {
+      width: 100%;
+      margin-top: 5px;
+    }
+  
+    .card-body {
+      padding: 15px;
+    }
+  
+    .form-control {
+      font-size: 0.9rem;
+    }
+  
+    h2 {
+      font-size: 1.5rem;
+    }
+  }
+  
+  /* PC View (Larger Screens) Adjustments */
+  @media (min-width: 1024px) {
+    .btn {
+      padding: 10px 20px; /* Reduce button padding */
+      font-size: 0.9rem; /* Slightly smaller font */
+    }
+  
+    .navbar .btn {
+      padding: 8px 16px; /* Smaller padding for navbar buttons */
+    }
+    
+    h2 {
+      font-size: 2rem;
+    }
+  }
+  
