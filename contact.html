@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form</title>
+    <link rel="stylesheet" href="scripts/contact.js">
+    <link rel="stylesheet" href="scripts/firebase.js">
+    <link rel="stylesheet" href="style/contact-style.css">
+    <script src="https://www.gstatic.com/firebasejs/10.3.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.3.0/firebase-firestore.js"></script>
+
+</head>
+
+<body>
+    <div class="biogas-background"></div>
+    <div class="contact-form-container">
+       
+        <h2>Contact Us</h2>
+        <form id="contactForm">
+            <div class="form-field">
+                <label for="name">Name</label>
+                <input type="text" id="name" placeholder="Enter your name" required>
+            </div>
+            <div class="form-field">
+                <label for="email">Phone number</label>
+                <input type="email" id="email" placeholder="Enter your phone number" required>
+            </div>
+            <div class="form-field">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Enter your email" required>
+            </div>
+            <div class="form-field">
+                <label for="message">Message</label>
+                <textarea id="message" placeholder="Your message" required></textarea>
+            </div>
+            
+            
+            <div class="form-field terms-field">
+                <input type="checkbox" id="termsCheckbox">
+                <label for="termsCheckbox">
+                    I agree to the 
+                    <span class="tooltip">
+                        Terms and Conditions
+                        <div class="tooltip-content">
+                            <h4>Terms and Conditions</h4>
+                            <p><strong>1. Acceptance of Terms:</strong> By accessing or using our services, you agree to be bound by these Terms and Conditions.</p>
+                            <p><strong>2. Description of Services:</strong> Our services include biogas plant solutions and related support services. We may modify these at any time.</p>
+                            <p><strong>3. User Accounts:</strong> You are responsible for your account confidentiality and activities.</p>
+                            <p><strong>4. User Conduct:</strong> Do not harass, harm, or violate rights of others.</p>
+                            <p><strong>5. Intellectual Property:</strong> Content is protected and owned by GobarShakti.</p>
+                            <p><strong>6. Limitation of Liability:</strong> We are not liable for any damages arising from the use of our services or products.</p>
+                            <p><strong>7. Governing Law:</strong> These terms follow the laws of Indian law.</p>
+                        </div>
+                    </span>
+                </label>
+            </div>
+            <button type="submit" class="submit-button" id="submitButton" disabled>Submit</button>
+            
+            
+          
+        </form>
+    </div>
+   
+    
+    <script src="firebase.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
