@@ -1,10 +1,16 @@
 body {
-    background-color: #d2ffd0;
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
+    background: linear-gradient(to bottom, #c0ffc5, #c8e6c9);
 }
-
+.biogas-background {
+    background: url('https://static.israel21c.org/www/uploads/2024/06/shutterstock_2285000669-Allahfoto-1520x855.jpg') no-repeat center center/cover;
+    opacity: 0.2;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
 .dashboard {
     width: 90%;
     max-width: 1200px;
@@ -14,159 +20,93 @@ body {
 .header {
     text-align: center;
     margin-bottom: 20px;
-    padding: 20px;
-    font-size: 32px;
-    font-weight: bold;
-    background-color: #fffebe;
-    border-radius: 10px;
-    box-shadow: 0 2px 20px rgba(56, 255, 122, 0.638);
+    padding: 20px 15px;
+    font-size: 28px; /* Slightly smaller for a cleaner appearance */
+    font-weight: 600; /* Adjust weight for a more modern look */
+    color: #000000; /* Professional dark color for text */
+    background-color: rgba(7, 233, 41, 0.073);
+    border-radius: 8px; /* Slightly rounded corners */
+    box-shadow: 0 4px 10px rgba(1, 186, 29, 0.432); /* Softer shadow */
+    border: 1px solid #00890977; /* Light border for definition */
+    font-family: 'Poppins', sans-serif; /* Modern font */
 }
+
+
+
 
 .charts-container {
     display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: space-between; /* Ensure proper spacing */
+    justify-content: space-between; /* Align charts side by side in web view */
+    gap: 30px;
+    flex-wrap: wrap; /* Ensure wrapping for smaller screens */
 }
 
 .chart-box {
-    flex: 1;
-    background-color: #FFF;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-    min-width: 280px;
+    width: 48%;
+  
+    border: 1px solid #15b432b8;
+    border-radius: 8px;
+    padding: 19px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* Ensures content doesn't overflow if it's larger */
+}
+
+
+.chart-box h3 {
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 15px;
 }
 
 .pie-container {
-    display: flex;
-    flex-direction: row; /* Side-by-side for web view */
-    gap: 20px;
-    align-items: flex-start;
+    text-align: center;
 }
 
 .pie-chart-box {
-    flex-shrink: 0;
-    width: 200px;
-}
-
-.pie-chart-box canvas {
-    width: 100% !important;
-    max-width: 300px;
-    height: auto !important;
-}
-
-.averageGraph {
-    flex-shrink: 0;
-    width: 200px;
+    width: 100%;
+    height: 200px;
+    margin-bottom: 20px;
 }
 
 .parameter-box {
-    background-color: #FFF;
-    padding: 20px;
+    background-color: #69ff1912;
+    padding: 11px;
     border-radius: 10px;
     box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-    flex-grow: 1;
-    min-width: 280px;
-    box-sizing: border-box;
-    text-align: left; /* Left-align text for clarity */
-    word-wrap: break-word;  /* Allow text to break and wrap properly */
-    overflow-wrap: break-word; /* Ensure that words break if they are too long */
-    margin-left: 20px;  /* Add spacing between the pie chart and the text */
-}
-
-.parameter-box h2 {
-    font-size: 20px;
-    margin-bottom: 10px;
-    white-space: normal; /* Allow text to wrap */
-    word-wrap: break-word; /* Wrap long words */
-    overflow-wrap: break-word; /* Ensure word wrapping */
-}
-
-
-.parameter-box p {
-    margin: 5px 0;
-    font-size: 16px;
-    word-wrap: break-word;  /* Ensure text wraps and doesn’t overflow */
-}
-
-.average-graph {
-    flex-basis: 100%;
-    margin-top: 20px;
+    text-align: start;
+    word-wrap: break-word;
+    font-size: 14px;
 }
 
 /* Mobile View Styling */
 @media (max-width: 768px) {
-    .header {
-        font-size: 28px;
-    }
-
     .charts-container {
-        flex-direction: column;
+        flex-direction: column; /* Stack all charts vertically */
         align-items: center;
     }
 
     .chart-box {
-        width: 100%;
+        width: 100%; /* Full width for charts in mobile view */
         max-width: 600px;
-    }
-
-    .pie-container {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .pie-chart-box,
-    .averageGraph {
-        width: 100%;
-        max-width: 250px;
         margin-bottom: 20px;
     }
 
     .parameter-box {
-        width: 100%;
         font-size: 14px;
         padding: 10px;
-        margin: 10px auto;
-    }
-
-    .parameter-box h2 {
-        font-size: 16px;
-    }
-
-    .parameter-box p {
-        font-size: 14px;
     }
 }
+/* Hide line graph in mobile view */
+@media (max-width: 768px) {
+    .hide-on-mobile {
+        display: none; /* Hides the element on small screens */
+    }
 
-/* Fix for long text: Ensure it breaks properly */
-.parameter-box h2, .parameter-box p {
-    white-space: normal;  /* Allow wrapping of text */
-    overflow: hidden;
-    text-overflow: ellipsis;  /* Add ellipsis if text overflows */
-}
+    .charts-container {
+        flex-direction: column; /* Stacks the charts vertically */
+    }
 
-/* Pie chart responsive */
-.pie-chart-box canvas {
-    max-width: 200px;
-    margin: 0 auto;  /* Center the pie chart */
-}
-
-.parameter-box {
-    text-align: left;
-    word-wrap: break-word;
-}
-
-/* Navbar Styling */
-.navbar {
-    margin-bottom: 20px;
-}
-
-.navbar-nav .nav-link {
-    font-size: 18px;
-    padding: 10px 20px;
-}
-
-.navbar-brand {
-    font-size: 24px;
+    .chart-box {
+        width: 100%; /* Make the chart boxes full-width in mobile view */
+    }
 }
