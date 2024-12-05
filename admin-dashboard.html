@@ -10,14 +10,15 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="style/admin-style.css">
- <link rel="icon" href="https://www.clker.com/cliparts/1/O/y/P/p/i/slim-green-led-on-hi.png" type="image/x-icon">
+    <link rel="icon" href="https://www.clker.com/cliparts/1/O/y/P/p/i/slim-green-led-on-hi.png" type="image/x-icon">
 </head>
 
 <body>
-    
+
     </head>
 
     <body>
+        <div class="biogas-background"></div>
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
             <!-- Webpage Name on the Left -->
@@ -45,69 +46,59 @@
         </nav>
         <br><br><br>
         <!-- Dashboard Content -->
+        <!-- Dashboard Content -->
         <div class="dashboard">
             <div class="header">Sensor Dashboard</div>
 
-            <!-- Line and Bar Graphs -->
+            <!-- Line and Bar Graphs (Web View: Side by Side) -->
             <div class="charts-container">
-                <div class="chart-box">
+                <div class="chart-box hide-on-mobile">
+                    <h3>Line Graph</h3>
                     <canvas id="lineGraph"></canvas>
                 </div>
                 <div class="chart-box">
+                    <h3>Bar Graph</h3>
                     <canvas id="barGraph"></canvas>
                 </div>
             </div>
+
             <br>
-           <!-- Pie Chart and Parameters -->
-<div class="charts-container">
-    <div class="chart-box pie-container">
-        <div class="pie-chart-box">
-            <canvas id="currentPieChart"></canvas> <!-- Pie chart for Current Readings -->
-        </div>
-        <div class="parameter-box">
-            <h2>Current Readings</h2>
-            <p><b>Temperature:</b> <span id="temperature">-- °C</span></p>
-            <p><b>Humidity:</b> <span id="humidity">--%</span></p>
-            <p><b>Methane:</b> <span id="methane">-- ppm</span></p>
-            <p><b>pH:</b> <span id="ph">--</span></p>
-            <p><b>Pressure:</b> <span id="pressure">-- hPa</span></p>
-        </div>
-    </div>
-</div>
-<div class="charts-container">
-    <div class="chart-box pie-container">
-        <div class="pie-chart-box">
-            <canvas id="currentPieChart"></canvas>
-        </div>
-        <div class="parameter-box">
-            <h2>Current Readings</h2>
-            <p><b>Temperature:</b> <span id="temperature">-- °C</span></p>
-            <p><b>Humidity:</b> <span id="humidity">--%</span></p>
-            <p><b>Methane:</b> <span id="methane">-- ppm</span></p>
-            <p><b>pH:</b> <span id="ph">--</span></p>
-            <p><b>Pressure:</b> <span id="pressure">-- hPa</span></p>
-        </div>
-    </div>
-</div>
 
-<br>
+            <!-- Current and Average Readings (Side by Side in Web View) -->
+            <div class="charts-container">
+                <!-- Current Readings -->
+                <div class="chart-box pie-container">
+                    <h3>Current Readings</h3>
+                    <div class="pie-chart-box">
+                        <canvas id="currentPieChart"></canvas>
+                    </div>
+                    <div class="parameter-box">
+                        <p><b>Temperature:</b> <span id="temperature">-- °C</span></p>
+                        <p><b>Humidity:</b> <span id="humidity">--%</span></p>
+                        <p><b>Methane:</b> <span id="methane">-- ppm</span></p>
+                        <p><b>pH:</b> <span id="ph">--</span></p>
+                        <p><b>Pressure:</b> <span id="pressure">-- hPa</span></p>
+                    </div>
+                </div>
 
-<!-- Average Readings Graph -->
-<div class="charts-container">
-    <div class="chart-box pie-container">
-        <div class="pie-chart-box">
-            <canvas id="averagePieChart"></canvas> <!-- Pie chart for Average Readings -->
+                <!-- Average Readings -->
+                <div class="chart-box pie-container">
+                    <h3>Average Readings (Last 5 Minutes)</h3>
+                    <div class="pie-chart-box">
+                        <canvas id="averagePieChart"></canvas>
+                    </div>
+                    <div class="parameter-box">
+                        <p><b>Temperature:</b> <span id="avg-temperature">-- °C</span></p>
+                        <p><b>Humidity:</b> <span id="avg-humidity">--%</span></p>
+                        <p><b>Methane:</b> <span id="avg-methane">-- ppm</span></p>
+                        <p><b>pH:</b> <span id="avg-ph">--</span></p>
+                        <p><b>Pressure:</b> <span id="avg-pressure">-- hPa</span></p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="parameter-box">
-            <h2>Average Readings (Last 5 Minutes)</h2>
-            <p><b>Temperature:</b> <span id="avg-temperature">-- °C</span></p>
-            <p><b>Humidity:</b> <span id="avg-humidity">--%</span></p>
-            <p><b>Methane:</b> <span id="avg-methane">-- ppm</span></p>
-            <p><b>pH:</b> <span id="avg-ph">--</span></p>
-            <p><b>Pressure:</b> <span id="avg-pressure">-- hPa</span></p>
-        </div>
-    </div>
-</div>
+
+
 
 
 
@@ -207,7 +198,7 @@
             firebase.initializeApp(firebaseConfig);
 
             // Define the UID of the user (can be dynamically set through authentication)
-            const UID = "9DK3ehXM85RgXdVWdRg1FuxsyQG3"; // Replace with dynamic UID if necessary
+            const UID = "U7G3fU2BxUY8nQ7e0Lx5tg5ZwwC3"; // Replace with dynamic UID if necessary
 
             // Reference to RealTimeData for the specific user
             const realTimeDataRef = firebase.database().ref(`Users/${UID}/RealTimeData`);
