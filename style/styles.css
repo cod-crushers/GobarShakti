@@ -55,6 +55,46 @@
     font-size: 0.85em;
     color: #444;
 }
+/* Navbar Link Hover Effect with Line */
+.navbar-nav .nav-item .nav-link {
+    font-size: 1.1em;
+    font-weight: 500;
+    color: #fff;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    position: relative; /* Required for pseudo-element positioning */
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.navbar-nav .nav-item .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: #ffdd00; /* Line color */
+    transition: width 0.3s ease, left 0.3s ease;
+    z-index: -1; /* Ensure it doesn't overlap text */
+}
+
+.navbar-nav .nav-item .nav-link:hover::after {
+    width: 100%; /* Full-width line on hover */
+    left: 0; /* Center align the line */
+}
+
+.navbar-nav .nav-item .nav-link:hover {
+    color: #ffb300; /* Yellow text color */
+    transform: translateY(-2px); /* Slight lift animation */
+}
+.navbar-logo {
+    width: 82px; /* Adjust width as needed */
+    height: 48px; /* Adjust height as needed */
+    margin-right: 5px; /* Space between image and text */
+    margin: left 5px;
+    border-radius: 50%; /* Optional: Make the logo circular */
+    object-fit: cover; /* Ensures the image is well-fit */
+}
 
 /* Navbar Styling */
 .navbar {
@@ -94,7 +134,7 @@
 }
 
 .navbar-nav .nav-item .nav-link:hover {
-    color: #89ff3b;  /* Yellow hover effect */
+    color: #ffcc00;  /* Yellow hover effect */
     transform: translateY(-5px);  /* Slight hover animation */
 }
 
