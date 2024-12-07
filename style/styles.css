@@ -88,17 +88,17 @@
     transform: translateY(-2px); /* Slight lift animation */
 }
 .navbar-logo {
-    width: 82px; /* Adjust width as needed */
-    height: 48px; /* Adjust height as needed */
-    margin-right: 5px; /* Space between image and text */
+    width: 82px;  
+    height: 48px;  
+    margin-right: 5px;  
     margin: left 5px;
-    border-radius: 50%; /* Optional: Make the logo circular */
-    object-fit: cover; /* Ensures the image is well-fit */
+    border-radius: 50%; 
+    object-fit: cover;  
 }
 
 /* Navbar Styling */
 .navbar {
-    background-color: #000000;  /* Black background */
+    background-color: #04001d;   
     padding: 15px 30px;
     transition: all 0.3s ease;
 }
